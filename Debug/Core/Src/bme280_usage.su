@@ -1,0 +1,5 @@
+bme280_usage.c:23:8:I2C_Read	40	static
+bme280_usage.c:30:8:I2C_Write	40	static
+bme280_usage.c:37:8:BME280_Init	16	static
+bme280_usage.c:77:8:BME280_Read_Data	24	static
+bme280_usage.c:87:6:BME280_Print_Data	40	static
