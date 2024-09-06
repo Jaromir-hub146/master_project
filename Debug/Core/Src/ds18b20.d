@@ -1,8 +1,4 @@
-Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
- ../Core/Inc/stm32l4xx_hal_conf.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h \
+Core/Src/ds18b20.o: ../Core/Src/ds18b20.c ../Core/Inc/ds18b20.h \
  ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -11,6 +7,10 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Drivers/CMSIS/Include/cmsis_gcc.h \
  ../Drivers/CMSIS/Include/mpu_armv7.h \
  ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/system_stm32l4xx.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
+ ../Core/Inc/stm32l4xx_hal_conf.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h \
@@ -29,22 +29,9 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- ../Core/Inc/i2c.h ../Core/Inc/main.h ../Core/Inc/tim.h \
- ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/DFRobot_BloodOxygen_S.hpp ../Core/Inc/fonts.h \
- ../Core/Inc/ssd1306.h ../Core/Inc/fonts.h ../Core/Inc/bme280_usage.h \
- ../Core/Inc/bme280_defs.h ../Core/Inc/bme280_defs.h \
- ../Core/Inc/my_delay.h ../Core/Inc/ds18b20.h
+ ../Core/Inc/wire.h
 
-../Core/Inc/main.h:
-
-../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
-
-../Core/Inc/stm32l4xx_hal_conf.h:
-
-../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
-
-../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h:
+../Core/Inc/ds18b20.h:
 
 ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l4xx.h:
 
@@ -61,6 +48,14 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Drivers/CMSIS/Include/mpu_armv7.h:
 
 ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/system_stm32l4xx.h:
+
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
+
+../Core/Inc/stm32l4xx_hal_conf.h:
+
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
+
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h:
 
 ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:
 
@@ -98,30 +93,4 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
 
-../Core/Inc/i2c.h:
-
-../Core/Inc/main.h:
-
-../Core/Inc/tim.h:
-
-../Core/Inc/usart.h:
-
-../Core/Inc/gpio.h:
-
-../Core/Inc/DFRobot_BloodOxygen_S.hpp:
-
-../Core/Inc/fonts.h:
-
-../Core/Inc/ssd1306.h:
-
-../Core/Inc/fonts.h:
-
-../Core/Inc/bme280_usage.h:
-
-../Core/Inc/bme280_defs.h:
-
-../Core/Inc/bme280_defs.h:
-
-../Core/Inc/my_delay.h:
-
-../Core/Inc/ds18b20.h:
+../Core/Inc/wire.h:

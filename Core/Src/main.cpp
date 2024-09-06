@@ -25,7 +25,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include "DFRobot_BloodOxygen_S.hpp"
+#include "fonts.h"
+#include "ssd1306.h"
+extern "C" {
+#include "bme280_usage.h"
+#include "bme280_defs.h"
+#include "my_delay.h"
+#include "ds18b20.h"
+}
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +54,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+static struct bme280_data bme_received_data;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -59,52 +68,6 @@ void SystemClock_Config(void);
 
 /* USER CODE END 0 */
 
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void)
-{
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
-  SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_I2C1_Init();
-  MX_TIM6_Init();
-  MX_USART2_UART_Init();
-  MX_UART4_Init();
-  /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
-}
 
 /**
   * @brief System Clock Configuration
@@ -153,10 +116,6 @@ void SystemClock_Config(void)
   }
 }
 
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
-
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None
@@ -171,6 +130,155 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_I2C1_Init();
+  MX_TIM6_Init();
+  MX_USART2_UART_Init();
+  MX_UART4_Init();
+  /* USER CODE BEGIN 2 */
+// TIMER
+  HAL_TIM_Base_Start(&htim6);
+// MAX30102
+  DFRobot_BloodOxygen_S_I2C MAX30102(0x57);
+  MAX30102.sensorStartCollect();
+// BME280
+  if(BME280_Init() != BME280_OK)
+  {
+	  printf("Blad inicjalizacji BME280!\n");
+  }
+// DS18B20
+  uint8_t ds18b20_rom_code[DS18B20_ROM_CODE_SIZE];
+  if (DS18B20_Read_Address(ds18b20_rom_code) != HAL_OK) {
+    printf("Blad inicjalizacji DS18B20!\r\n");
+    Error_Handler();
+  }
+//SSD1306
+  SSD1306_Init();
+  SSD1306_GotoXY (0,0);
+  SSD1306_Puts("STARTING", &Font_11x18, (SSD1306_COLOR_t)1);
+  SSD1306_GotoXY (0, 30);
+  SSD1306_Puts("DEVICE", &Font_11x18, (SSD1306_COLOR_t)1);
+  SSD1306_UpdateScreen();
+  DELAY_ms (1000);
+  SSD1306_ScrollRight(0,7);
+  DELAY_ms(3000);
+  SSD1306_ScrollLeft(0,7);
+  DELAY_ms(3000);
+  SSD1306_Stopscroll();
+  SSD1306_Clear();
+
+//  int num=2024;
+//  char snum[5];
+//  SSD1306_GotoXY (30,20);
+//  itoa(num, snum, 10);
+//  SSD1306_Puts (snum, &Font_16x26, (SSD1306_COLOR_t)1);
+//  SSD1306_UpdateScreen();
+//
+//  //SSD1306_DrawLine(POINT1 X, POINT1 Y, POINT2 X, POINT2 Y, 1);
+//  SSD1306_DrawLine(1,30,126,30, (SSD1306_COLOR_t)1);
+//  SSD1306_UpdateScreen();
+//  DELAY_ms (5000);
+//  SSD1306_Clear();
+//
+//  // For Rectangle, we need to use two corner points
+//  // SSD1306_DrawRectangle(POINT1 X, POINT1 Y, POINT2 X, POINT2 Y, 1);
+//  SSD1306_DrawRectangle(17,1,115,14, (SSD1306_COLOR_t)1);
+//  // SSD1306_DrawTriangle(POINT1X, POINT1Y, POINT2X, POINT2Y, POINT3X, POINT3Y, 1);
+//  SSD1306_DrawTriangle(73,22,124,62,74,54, (SSD1306_COLOR_t)1);
+//  // SSD1306_DrawCircle(CENTER POINT X, CENTER POINT Y, RADIUS, 1);
+//  SSD1306_DrawCircle(34,50,13, (SSD1306_COLOR_t)1);
+//  SSD1306_UpdateScreen();
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+// MAX30102
+  MAX30102.getHeartbeatSPO2();
+  printf("SpO2 = %d, Heart Rate: %d, Board temperature: %0.2f \r\n", MAX30102._sHeartbeatSPO2.SPO2, MAX30102._sHeartbeatSPO2.Heartbeat, MAX30102.getTemperature_C());
+  DELAY_ms(2000);
+
+// DS18B20
+  DS18B20_Start_Measure(NULL);
+
+  DELAY_ms(750);
+
+  float temperature = DS18B20_Get_Temp(NULL);
+
+  if (temperature >= 80.0f) {
+    printf("DS18B20 ERROR!\r\n");
+  } else {
+    printf("Temperature = %0.2fC\r\n", temperature);
+  }
+//SSD1306
+  char max30102_oled_sp02[12];
+  sprintf(max30102_oled_sp02, "SpO2: %d", MAX30102._sHeartbeatSPO2.SPO2);
+
+  char max30102_oled_hr[15];
+  sprintf(max30102_oled_hr, "Pulse: %d", MAX30102._sHeartbeatSPO2.Heartbeat);
+
+  char temp_oled[15];
+  sprintf(temp_oled, "Temp: %0.2fC", temperature);
+
+  SSD1306_Clear();
+  SSD1306_GotoXY (0,0);
+  SSD1306_Puts(max30102_oled_sp02, &Font_11x18, (SSD1306_COLOR_t)1);
+  SSD1306_GotoXY (0, 24);
+  SSD1306_Puts(max30102_oled_hr, &Font_11x18, (SSD1306_COLOR_t)1);
+  SSD1306_GotoXY (0, 45);
+  SSD1306_Puts(temp_oled, &Font_11x18, (SSD1306_COLOR_t)1);
+  SSD1306_UpdateScreen();
+
+// BME280
+	if(BME280_Read_Data(&bme_received_data) != BME280_OK)
+	{
+		printf("Blad odczytu BME280!\r\n");
+	}
+	else
+	{
+		BME280_Print_Data(&bme_received_data);
+	}
+
+	DELAY_ms(1000);
+   }
+  /* USER CODE END 3 */
+}
+
+/* USER CODE BEGIN 4 */
+
+/* USER CODE END 4 */
 
 #ifdef  USE_FULL_ASSERT
 /**

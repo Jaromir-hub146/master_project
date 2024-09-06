@@ -1,0 +1,6 @@
+ds18b20.c:28:19:DS18B20_Read_Address	40	static
+ds18b20.c:57:26:Send_CMD	24	static
+ds18b20.c:83:19:DS18B20_Start_Measure	16	static
+ds18b20.c:88:26:DS18B20_Read_Scratchpad	40	static
+ds18b20.c:116:7:DS18B20_Get_Temp	32	static
+ds18b20.c:137:6:Hex_Convert_ROM	72	static

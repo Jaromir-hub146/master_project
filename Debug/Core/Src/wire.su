@@ -1,0 +1,7 @@
+wire.c:11:13:Set_Baud_Rate	16	static
+wire.c:30:19:Wire_Reset	16	static
+wire.c:46:12:Read_Bit	16	static
+wire.c:56:9:Wire_Read	16	static
+wire.c:67:13:Write_Bit	24	static
+wire.c:78:6:Wire_Write	24	static
+wire.c:86:9:Wire_Crc	32	static
