@@ -8,7 +8,7 @@
  * @date  2021-06-21
  * @url https://github.com/DFRobot/DFRobot_BloodOxygen_S
  */
-#include <DFRobot_BloodOxygen_S.hpp>
+#include <DFRobot_BloodOxygen_S.h>
 #include "i2c.h"
 #include "stm32l4xx_hal_i2c.h"
 

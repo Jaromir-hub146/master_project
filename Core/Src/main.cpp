@@ -17,6 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <DFRobot_BloodOxygen_S.h>
 #include "main.h"
 #include "i2c.h"
 #include "tim.h"
@@ -26,7 +27,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "DFRobot_BloodOxygen_S.hpp"
 #include "fonts.h"
 #include "ssd1306.h"
 extern "C" {
